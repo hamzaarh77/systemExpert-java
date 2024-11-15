@@ -22,11 +22,35 @@ public class Moteur {
                     if(!fb.contains(conclusion)){
                         fb.addFact(new Fact (conclusion.getName(), conclusion.getArguments(), true));
                         newFact = true ;
-                        System.out.println("entrée");
                     }
                 }
             }
         }while(newFact);
+    }
+
+    public boolean chainageArriere(Fact goal, FactBase fb){
+        // verifie si le fait existe dans la base de fait
+        if(fb.contains(goal))
+            return fb.getFact(goal).getValue();
+        
+        //cherche des regles qui concluent le fait
+        for(Rule rule : rules){
+            if(rule.getConclusion().equals(goal)){
+                boolean premissesTrue = true ;
+                for (Fact premisse : rule.getPremisses()){
+                    if(!chainageArriere(premisse, fb)){
+                        premissesTrue = false ;
+                        break;
+                    }
+                }
+                if(premissesTrue){
+                    fb.addFact(new Fact(goal.getName(), goal.getArguments(), true));
+                    return true;
+                }
+            }
+        }
+        // aucune regle ne permet de conclure le fait
+        return false ;
     }
 
 

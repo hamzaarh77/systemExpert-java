@@ -34,6 +34,11 @@ public class FactBase {
         return sb.toString();
     }
 
+    public Fact getFact(Fact fact){
+        int index = facts.indexOf(fact);
+        return index != -1 ? facts.get(index) : null ;
+    }
+
 
     // getters ans setters 
     public List<Fact> getFacts() {

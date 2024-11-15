@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 public class Fact {
     private String name;
@@ -19,7 +19,7 @@ public class Fact {
         return name.equals(fact.name) && arguments.equals(fact.arguments);
     }
 
-    
+
     public boolean detecterIncoherence(List<Fact> facts){
         // detecter une incoherence entre le fait et notre base de faits
         // le probleme de cette implementation et que les arguments de deux faits egaux doivent etre dans le meme ordre pour pouvoir detecter qu'ils sont egaux
@@ -46,6 +46,11 @@ public class Fact {
 
     public Fact copy(){
         return new Fact(this.name, this.arguments, this.value);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(name, arguments);
     }
 
 
